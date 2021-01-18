@@ -9,10 +9,6 @@ HEIGHT = INCH * 11
 
 FRETS = 5
 
-TITLE = "Diatonic Modes"
-
-fingers = [[(0, 0)],[],[],[],[],[],[],[],[]]
-
 class FretBox():
     def __init__(self, origin):
         end_point = origin.clone()
@@ -48,8 +44,13 @@ class FretBox():
         finger.draw(win)
         finger.setFill("black")
 
+    def draw_name(self, win, name):
+        name_point = Point(self.origin.x + (self.width / 2), self.origin.y - .2 * INCH)
+        name_text = Text(name_point, name)
+        name_text.draw(win)
 
-def main(title, box_fing_pairs):
+
+def main(title, content):
     ORIGIN = Point(INCH, INCH)
     END_POINT = Point(WIDTH - INCH, HEIGHT - INCH)
     MARGIN = Rectangle(ORIGIN, END_POINT)
@@ -64,13 +65,24 @@ def main(title, box_fing_pairs):
             y_or = ORIGIN.y + INCH / 2 + int(INCH * j * 3)
             fretbox = FretBox(Point(x_or, y_or))
             fretbox.draw(win)
-            for finger in box_fing_pairs[chord_num]:
+            for finger in content[chord_num]['checked_spots']:
                 fretbox.draw_finger(win, finger)
-            chord_num += 1;
+            fretbox.draw_name(win, content[chord_num]['name'])
+            chord_num += 1
     #MARGIN.draw(win)
-    click = win.getMouse()
-    #win.postscript(file="fretboard.eps", colormode="color")
+    #click = win.getMouse()
+    win.postscript(file=f"{title}.eps", colormode="color")
     win.close()
 
 if __name__ == "__main__":
-    main(TITLE, fingers)
+    TITLE = "Diatonic Modes"
+
+    test_content = [{'checked_spots': [(1, 0)], 'name': 'test1'},
+    {'checked_spots': [], 'name': ''},
+    {'checked_spots': [], 'name': ''},
+    {'checked_spots': [], 'name': ''},
+    {'checked_spots': [], 'name': 'test5'},
+    {'checked_spots': [], 'name': ''},
+    {'checked_spots': [], 'name': ''},
+    {'checked_spots': [], 'name': ''}, {'checked_spots': [], 'name': 'test9'}]
+    main(TITLE, test_content)

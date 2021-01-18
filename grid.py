@@ -17,20 +17,22 @@ class FretboxBuilder:
             height=3,
             borderwidth=1
         )
-        frame.grid(row=grid[0], column=grid[1])
-        label = tk.Label(master=frame, text=f"row={grid[0]}\ncolumn={grid[1]}")
-        label.pack()
+        frame.grid(column=grid[0], row=grid[1])
+        self.box_title = tk.Entry(master=frame)
+        self.box_title.pack()
         inner_frame = tk.Frame(master=frame)
         inner_frame.pack()
         self.check_vars = {}
         for i in range(6):
-            for j in range(6):
+            for j in range(5):
                 self.check_vars[(i, j)] = tk.IntVar()
-                tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(row=i, column=j)
+                tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(column=i, row=j)
 
-    def return_list(self):
-        checked_spots = filter(lambda box: self.check_vars[box].get() == 1, self.check_vars.keys())
-        return list(checked_spots)
+    def return_content(self):
+        content_dict = {}
+        content_dict['checked_spots'] = list(filter(lambda box: self.check_vars[box].get() == 1, self.check_vars.keys()))
+        content_dict['name'] = self.box_title.get()
+        return content_dict
 
 fretboxes = []
 for i in range(3):
@@ -38,13 +40,12 @@ for i in range(3):
         fretboxes.append(FretboxBuilder((i, j)))
 
 def print_boxes():
-    window.destroy()
     import draw_diagram
-    chord_fing_pairs = [fretbox.return_list() for fretbox in fretboxes]
+    fretbox_details = [fretbox.return_content() for fretbox in fretboxes]
     title_str = title.get()
-    for fretbox in fretboxes:
-        print(fretbox.return_list())
-    draw_diagram.main(title_str, chord_fing_pairs)
+    print(fretbox_details)
+    window.destroy()
+    draw_diagram.main(title_str, fretbox_details)
     exit()
 
 window.pack()

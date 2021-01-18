@@ -45,7 +45,7 @@ class FretBox():
         finger.setFill("black")
 
     def draw_name(self, win, name):
-        name_point = Point(self.origin.x, self.origin.y - int(INCH * 0.3))
+        name_point = Point(self.origin.x + (self.width / 2), self.origin.y - .2 * INCH)
         name_text = Text(name_point, name)
         name_text.draw(win)
 
@@ -70,14 +70,14 @@ def main(title, content):
             fretbox.draw_name(win, content[chord_num]['name'])
             chord_num += 1
     #MARGIN.draw(win)
-    click = win.getMouse()
-    win.postscript(file="fretboard.eps", colormode="color")
+    #click = win.getMouse()
+    win.postscript(file=f"{title}.eps", colormode="color")
     win.close()
 
 if __name__ == "__main__":
     TITLE = "Diatonic Modes"
 
-    test_content = [{'checked_spots': [(0, 0)], 'name': 'test1'},
+    test_content = [{'checked_spots': [(1, 0)], 'name': 'test1'},
     {'checked_spots': [], 'name': ''},
     {'checked_spots': [], 'name': ''},
     {'checked_spots': [], 'name': ''},

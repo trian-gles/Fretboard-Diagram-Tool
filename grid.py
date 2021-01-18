@@ -17,16 +17,16 @@ class FretboxBuilder:
             height=3,
             borderwidth=1
         )
-        frame.grid(row=grid[0], column=grid[1])
+        frame.grid(column=grid[0], row=grid[1])
         self.box_title = tk.Entry(master=frame)
         self.box_title.pack()
         inner_frame = tk.Frame(master=frame)
         inner_frame.pack()
         self.check_vars = {}
         for i in range(6):
-            for j in range(6):
+            for j in range(5):
                 self.check_vars[(i, j)] = tk.IntVar()
-                tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(row=i, column=j)
+                tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(column=i, row=j)
 
     def return_content(self):
         content_dict = {}

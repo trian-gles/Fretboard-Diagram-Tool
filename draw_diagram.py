@@ -49,6 +49,14 @@ class FretBox():
         name_text = Text(name_point, name)
         name_text.draw(win)
 
+    def draw_fretnums(self, win, fretnums):
+        for i in range(len(fretnums)):
+            point_x = self.origin.x - .2 * INCH
+            point_y = self.origin.y + int(i * self.height / FRETS + self.height / 10)
+            num_point = Point(point_x, point_y)
+            num_text = Text(num_point, fretnums[i])
+            num_text.draw(win)
+
 
 def main(title, content):
     ORIGIN = Point(INCH, INCH)
@@ -68,6 +76,7 @@ def main(title, content):
             for finger in content[chord_num]['checked_spots']:
                 fretbox.draw_finger(win, finger)
             fretbox.draw_name(win, content[chord_num]['name'])
+            fretbox.draw_fretnums(win, content[chord_num]['fret_nums'])
             chord_num += 1
     #MARGIN.draw(win)
     #click = win.getMouse()
@@ -75,14 +84,16 @@ def main(title, content):
     win.close()
 
 if __name__ == "__main__":
-    TITLE = "Diatonic Modes"
+    TITLE = "TEST"
 
-    test_content = [{'checked_spots': [(1, 0)], 'name': 'test1'},
-    {'checked_spots': [], 'name': ''},
-    {'checked_spots': [], 'name': ''},
-    {'checked_spots': [], 'name': ''},
-    {'checked_spots': [], 'name': 'test5'},
-    {'checked_spots': [], 'name': ''},
-    {'checked_spots': [], 'name': ''},
-    {'checked_spots': [], 'name': ''}, {'checked_spots': [], 'name': 'test9'}]
+    test_content = [{'checked_spots': [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 4)],
+    'name': '(0,0)', 'fret_nums': ['1', '2', '3', '4','5']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '(1,2)', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']},
+    {'checked_spots': [], 'name': '', 'fret_nums': ['', '', '', '', '']}]
     main(TITLE, test_content)

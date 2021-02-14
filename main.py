@@ -53,7 +53,7 @@ class FretboxBuilder:
             if mode == "box":
                 fret_entry = tk.Entry(master=inner_frame, width=2)
                 fret_entry.grid(column=0, row=j)
-                self.fret_entries.append(fret_label)
+                self.fret_entries.append(fret_entry)
 
             #do not let user label frets in board mode, instead show common fret markers
             else:
@@ -63,16 +63,17 @@ class FretboxBuilder:
                 fret_label.grid(column=0, row=j)
 
             for i in range(6):
-                self.check_vars[(i, j)] = tk.IntVar()
+                self.check_vars[(i, j)] = tk.BooleanVar(main_window)
                 tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(column=i + 1, row=j)
 
     def return_content(self):
         content_dict = {}
-        checks = filter(lambda box: self.check_vars[box].get() == 1, self.check_vars.keys())
+        checks = filter(lambda box: self.check_vars[box].get(), self.check_vars.keys())
         content_dict['checked_spots'] = list(checks)
         content_dict['name'] = self.box_title.get()
         fret_nums = map(lambda fret: fret.get(), self.fret_entries)
-        content_dict['fret_nums'] = list(fret_nums)
+        if mode == "box":
+            content_dict['fret_nums'] = list(fret_nums)
         return content_dict
 
 fretboxes = []

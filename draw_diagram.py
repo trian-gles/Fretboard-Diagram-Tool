@@ -77,6 +77,7 @@ def main_box(title, content):
             fretbox = FretBox(Point(x_or, y_or), 5)
             fretbox.draw(win)
             for finger in content[chord_num]['checked_spots']:
+                print(f"Finger at {finger} in chord {chord_num}")
                 fretbox.draw_finger(win, finger)
             fretbox.draw_name(win, content[chord_num]['name'])
             fretbox.draw_fretnums(win, content[chord_num]['fret_nums'])
@@ -104,7 +105,7 @@ def main_full(title, content):
         fretbox.draw_fretnums(win, fret_nums)
         chord_num += 1
     #MARGIN.draw(win)
-    click = win.getMouse()
+#    click = win.getMouse()
     win.postscript(file=f"{title}.eps", colormode="color")
     win.close()
 

@@ -1,16 +1,39 @@
 import tkinter as tk
+import draw_diagram
+
+
+# First set up a window to decide between modes
+mode = None
+def set_mode(new_mode):
+    global mode
+    mode = new_mode
+    decision_window.quit()
+    decision_window.destroy()
+
+decision_window = tk.Tk()
+query = tk.Label(master=decision_window, text="Would you like to draw small \
+fretbox diagrams, or full fretboards?")
+query.pack()
+box_btn = tk.Button(master=decision_window, text="fretboxes",
+command=lambda: set_mode("box")).pack()
+board_btn = tk.Button(master=decision_window, text="fretboards",
+command=lambda: set_mode("board")).pack()
+
+decision_window.protocol("WM_DELETE_WINDOW", exit)
+decision_window.mainloop()
+
 
 main_window = tk.Tk()
-app_name = tk.Label(text="Guitar fret chart builder", width=30)
+app_name = tk.Label(master=main_window, text="Fretbox Builder", width=30)
 app_name.pack()
-title_label = tk.Label(text="Page Title:")
+title_label = tk.Label(master=main_window, text="Page Title:")
 title_label.pack()
-title = tk.Entry()
+title = tk.Entry(master=main_window)
 title.pack()
 window = tk.Frame(master=main_window)
 
 class FretboxBuilder:
-    def __init__(self, grid):
+    def __init__(self, grid, frets):
         frame = tk.Frame(
             master=window,
             relief=tk.RAISED,
@@ -24,7 +47,7 @@ class FretboxBuilder:
         inner_frame.pack()
         self.check_vars = {}
         self.fret_entries = []
-        for j in range(5):
+        for j in range(frets):
             fret_label = tk.Entry(master=inner_frame, width=2)
             fret_label.grid(column=0, row=j)
             self.fret_entries.append(fret_label)
@@ -43,18 +66,25 @@ class FretboxBuilder:
 
 fretboxes = []
 for i in range(3):
-    for j in range(3):
-        fretboxes.append(FretboxBuilder((i, j)))
+    if mode == "box":
+        for j in range(3):
+            fretboxes.append(FretboxBuilder((i, j), 5))
+    else:
+        fretboxes.append(FretboxBuilder((i, 0), 15))
 
 def print_boxes():
-    import draw_diagram
     fretbox_details = [fretbox.return_content() for fretbox in fretboxes]
     title_str = title.get()
     #print(fretbox_details)
-    window.destroy()
-    draw_diagram.main(title_str, fretbox_details)
+    main_window.destroy()
+    if mode == "box":
+        draw_diagram.main_box(title_str, fretbox_details)
+    else:
+        draw_diagram.main_full(title_str, fretbox_details)
     exit()
 
 window.pack()
 button = tk.Button(master=main_window, command=print_boxes, text="Render").pack()
+
+main_window.protocol("WM_DELETE_WINDOW", exit)
 main_window.mainloop()

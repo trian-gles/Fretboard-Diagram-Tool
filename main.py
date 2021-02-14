@@ -48,9 +48,20 @@ class FretboxBuilder:
         self.check_vars = {}
         self.fret_entries = []
         for j in range(frets):
-            fret_label = tk.Entry(master=inner_frame, width=2)
-            fret_label.grid(column=0, row=j)
-            self.fret_entries.append(fret_label)
+
+            #let the user label frets in box mode
+            if mode == "box":
+                fret_entry = tk.Entry(master=inner_frame, width=2)
+                fret_entry.grid(column=0, row=j)
+                self.fret_entries.append(fret_label)
+
+            #do not let user label frets in board mode, instead show common fret markers
+            else:
+                fret_label = tk.Label(master=inner_frame, width=2)
+                if j in (2, 4, 6, 8, 11, 14):
+                    fret_label['text'] = str(j + 1)
+                fret_label.grid(column=0, row=j)
+
             for i in range(6):
                 self.check_vars[(i, j)] = tk.IntVar()
                 tk.Checkbutton(master=inner_frame, variable=self.check_vars[(i, j)]).grid(column=i + 1, row=j)

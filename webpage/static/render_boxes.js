@@ -2,12 +2,10 @@
 
 let rows = []
 
-console.log("IT WORK")
-
 for (let i = 0; i < 5; i++) {
   let row = [];
   for (let j = 0; j < 6; j++) {
-    row.push([i, j]);
+    row.push([j, i]);
   };
   rows.push(row);
 };
@@ -15,16 +13,16 @@ for (let i = 0; i < 5; i++) {
 const RENDBOXES = rows.map(row => (
   <div key={row[0]}>
     {row.map(item => (
-    <input type="checkbox" key={item}></input>))}
+    <input type="checkbox" name={item} key={item} id="fret"></input>))}
   </div>));
 
 var App = function() {
-  console.log("running")
+  console.log("doest this change?")
   return (
-  <div>
-    <p>Fretbox:</p>
-    {RENDBOXES}
-  </div>
+    <form action='/' method="POST">
+      {RENDBOXES}
+      <input type="submit"></input>
+    </form>
 
   );
 };

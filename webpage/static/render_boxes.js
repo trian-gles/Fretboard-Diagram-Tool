@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 let rows = []
 
 for (let i = 0; i < 5; i++) {
@@ -10,22 +12,24 @@ for (let i = 0; i < 5; i++) {
   rows.push(row);
 };
 
-const RENDBOXES = rows.map(row => (
+const BOX = rows.map(row => (
   <div key={row[0]}>
     {row.map(item => (
     <input type="checkbox" name={item} key={item} id="fret"></input>))}
   </div>));
 
-var App = function() {
-  console.log("doest this change?")
-  return (
-    <form action='/' method="POST">
-      {RENDBOXES}
-      <input type="submit"></input>
-    </form>
+const BOXES = [0, 1, 2, 3, 4, 5].map(num => (
+  <div class="fretbox">{BOX}</div>
+));
 
-  );
-};
+  var App = function() {
+    return (
+      <form action='/' method="POST">
+        {BOXES}
+        <input type="submit"></input>
+      </form>
+    );
+  };
 
 ReactDOM.render(
   <App />,

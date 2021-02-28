@@ -1,6 +1,30 @@
 body {
 }
 
+.page-title {
+  text-align: center;
+}
+
+#all_boxes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .fretbox {
   border-style: solid;
+  margin: 10px;
+}
+
+.box_title {
+  display: block;
+}
+
+.fret_label {
+  width: 2em;
+}
+
+#submit-div {
+  text-align: center;
 }

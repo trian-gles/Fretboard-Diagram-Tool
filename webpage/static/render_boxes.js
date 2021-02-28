@@ -12,24 +12,27 @@ for (let i = 0; i < 5; i++) {
   rows.push(row);
 };
 
-const BOX = rows.map(row => (
+function Box(props) {
+  let num = props.num
+  return (rows.map(row => (
   <div key={row[0]}>
     {row.map(item => (
-    <input type="checkbox" name={item} key={item} id="fret"></input>))}
-  </div>));
+    <input type="checkbox" name={[num].concat(item)} key={item} id="fret"></input>))}
+  </div>)))
+}
 
 const BOXES = [0, 1, 2, 3, 4, 5].map(num => (
-  <div class="fretbox">{BOX}</div>
+  <div class="fretbox"><Box num={num}/></div>
 ));
 
-  var App = function() {
-    return (
-      <form action='/' method="POST">
-        {BOXES}
-        <input type="submit"></input>
-      </form>
-    );
-  };
+var App = function() {
+  return (
+    <form action='/' method="POST">
+      {BOXES}
+      <input type="submit"></input>
+    </form>
+  );
+};
 
 ReactDOM.render(
   <App />,
